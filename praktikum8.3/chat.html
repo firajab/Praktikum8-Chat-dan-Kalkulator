@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Praktikum Ketiga</title>
+        <meta charset="UTF-8" />
+        <link href="https://fonts.googleapis.com/css?family=Josefin+Sans" rel="stylesheet">
+        <style>
+            html,body 
+{
+    padding:0;
+    margin:0;
+    max-width:100%;
+    user-select:none;
+    -ms-user-select:none;
+    -moz-user-select:none;
+    -webkit-user-select:none;
+   
+   
+}
+
+.nice-font
+{
+    font-family:'Josefin Sans',sans-serif;
+}
+
+header
+{
+      text-align:center;
+}
+
+main
+{
+    padding:10px;
+    margin-bottom:50px;
+}
+
+footer #command
+{
+    position:fixed;
+    bottom:0;
+    width:100%;
+    padding:7px 7px;
+    padding-right:7px;
+    margin-bottom:5px;
+    border-radius:20px;
+    border:0.5px solid #9e9e9e50;
+    -ms-box-sizing:border-box;
+    box-sizing:border-box ;
+    background-color: palevioletred;
+    
+}
+
+#command input
+{
+    display:block;
+    width:73%;
+    float:left;
+    
+}
+
+#command input,#command button
+{
+    
+    padding:10px 15px;
+    border:0;
+    outline:0;
+}
+
+
+button
+{
+    background-color: pink;
+    color: black;
+    border-radius:20px;
+    font-weight:300;
+    float:right;
+    
+    
+ }
+ .row
+ {
+     width:100%;
+     margin-bottom:10px;
+     display:block;
+ }
+ .row::after{
+      content: "";
+    display: table;
+    clear: both;
+ }
+.chat
+{
+    border:0.7px solid #9e9e9e50;
+    word-wrap:break-word;
+    background-color: paleturquoise;
+    border-radius:20px;
+    color:#333;
+    padding:10px 20px;
+    display:inline-block  
+}
+
+.question
+{
+    float:right;
+    background-color: plum;
+    color: black;
+    border-color:rgba(0,0,200,0.1);
+}
+
+.answer
+{
+    float:left;
+}
+        </style>
+        
+        <script>
+
+const Random = list => list[Math.floor(Math.random()*list.length)]; 
+const Links = {
+    "facebook" : "https://www.facebook.com",
+    "youtube" : "https://www.youtube.com",
+    "instagram" : "https://www.instagram.com",
+};
+
+const getLink = siteName => `klik disini untuk membuka 'link berikut' <a href="${Links[siteName]}">${siteName}</a>`;
+
+
+
+const pertanyaan = [
+    
+    `Gunakan pertanyaan yang mengandung kata kunci, contohnya (assalamualaikum) dan lainnya.<br/>
+Daftar kata kunci yang dapat di pakai:<br/>
+1.asslamualaikum<br/>
+2.siapa namamu<br/>
+3.apakabar<br/>
+4.hi<br/>
+5.matematika<br/>
+6.ipa<br/>
+7.jakarta<br/>
+8.depok<br/>
+9.bandung<br/>
+10.tanggal<br/>
+11.jam<br/>
+12.alhamdulillah<br/>
+13.terimakasih<br/>
+14.siapa saya</br>
+15.selamat malam<br/>
+16.selamat pagi<br/>>
+17.facebook<br/>
+18.youtube<br/>
+19.instagram<br/>
+20.sampai jumpa<br/>`
+
+];
+
+const ini_adalah_daftar_pertanyaan_yang_dapat_Anda_gunakan = pertanyaan => Random(pertanyaan);
+
+
+const illegals = [
+  "window",
+  ...Object.keys(window),
+  ...Object.keys(document),
+  ...Object.keys(Element.prototype)
+];
+
+const isLegal = string => {
+    
+    let Legal = true;
+
+    illegals.forEach(illegal=>{
+        
+        if(string.indexOf(illegal) !== -1)
+        {
+            Legal = false;
+        }
+        
+    });
+    
+    return Legal;
+}
+
+const HtmlSpecialChars = function(string) {
+    let escapedString = string;
+
+     const len = HtmlSpecialChars.specialchars.length;
+    for (let x = 0; x < len; x++) { 
+  
+   escapedString = escapedString.replace( new RegExp(HtmlSpecialChars.specialchars[x][0], 'g'), HtmlSpecialChars.specialchars[x][1] );
+        } 
+    
+    return escapedString;
+};
+     
+HtmlSpecialChars.specialchars = [
+    [ '&', '&amp;' ],
+    [ '<', '&lt;' ],
+    [ '>', '&gt;' ],
+    [ '"', '&quot;' ]
+];
+
+const monthNames = [
+    "Januari",
+    "Februari",
+    "Maret", 
+    "April", 
+    "Mei", 
+    "Juni", 
+    "Juli", 
+    "Agustus", 
+    "September", 
+    "Oktober",
+    "November", 
+    "Desember"
+ ]; 
+
+
+const today = monthNames =>
+{
+  let date = new Date();
+  
+  return `${monthNames[date.getMonth()]} ${date.getDate()}, ${date.getFullYear()}`;
+  
+}
+
+
+const now = () =>
+{
+    let date = new Date();
+    
+    return date.toLocaleTimeString();
+}
+
+const Evaluate = expression =>
+{
+    try
+    {
+        if(isLegal(expression))
+        {
+            
+        
+            const result = eval(HtmlSpecialChars(expression));
+            return result;
+        
+        }
+        else 
+        {
+            return "error";
+        }
+    }
+    
+    catch(err)
+    {
+        return "error";
+    }
+}
+
+const Answers = {
+    "pertanyaan" : ini_adalah_daftar_pertanyaan_yang_dapat_Anda_gunakan(pertanyaan),
+    "assalamualaikum" : "waalaikumsalam",
+    "siapa namamu" : "nama saya Shafira",
+    "apakabar" : "aku baik-baik saja %U% 😃. kalau kamu bagaimana ? ",
+    "alhamdulillah" : "alhamdulillah wasyukurlillah",
+    "hi" : "halowww %U% :*",
+    "matematika" : " Menurut James dan James (Erman Suherman, 2001), mengatakan bahwa matematika adalah ilmu tentang logika mengenai bentuk, susunan, besaran, konsep-konsep yang berhubungan satu dengan yang lainnya dengan jumlah Page 2 13 yang banyak yang terbagi ke dalam tiga bidang, yaitu aljabar, analisis, dan geometri.",
+    "ipa" : " Menurut Trianto (2014: 136-137) mendefinisikan IPA adalah suatu kumpulan teori yang sistematis,penerapannya secara umum terbatas pada gejala-gejala alam, lahir, dan berkembang melalui metode ilmiah seperti observasi dan eksperimen serta menuntut sikap ilmiah.",
+    "jakarta" : "Jakarta (pengucapan bahasa Indonesia: [dʒa karta] ( simak)), atau secara resmi bernama Daerah Khusus Ibukota Jakarta (disingkat DKI Jakarta) adalah ibu kota.",
+    "depok" : "Bentang alam Kota Depok dari Selatan ke Utara merupakan daerah dataran rendah perbukitan bergelombang lemah, dengan elevasi antara 50 140 meter diatas.",
+    "bandung" : "Bandung adalah ibu kota provinsi Jawa Barat di Indonesia dan kota terbesar ketiga di Indonesia. Bandung Raya adalah metropolitan terbesar ketiga di negara ini.",
+    "kamu sedang apa" : "sedang menjoki kamu sampai ke surga 😂",
+    "siapa saya" : "kamu adalah %U% &#10024; salah satu anggota joki pertanyaan",
+    "tanggal" : "sekarang "+ today(monthNames) + " %U% ",
+    "jam" : "sekarang jam " + now() + " %U% ",
+    "selamat malam" : "selamat malam juga %U%",
+    "selamat pagi" : "selamat pagi juga %U%",
+    "facebook" : getLink("facebook"),
+    "youtube" : getLink("youtube"),
+    "instagram" : getLink("instagram")
+};
+
+const Notfound = "saya tidak mengenali pertanyaan Anda, coba gunakan pertanyaan yang telah di sediakan!";
+
+const Invalid = "Invalid Expression";
+
+const D = window.document;
+
+const element = selector => D.querySelector(selector);
+
+const Answer = (Main,User,Text) =>
+{
+    let Flag = false;
+    
+    const Result = Evaluate(Text);
+    
+    text = Text.toLowerCase();
+    
+    Object.keys(Answers).forEach(key =>{
+    
+    if(!Flag)
+    {
+        if(text.indexOf(key) !== -1 )
+        {
+    
+          addAnswer(
+              Main,
+              Answers[key].replace(
+              "%U%",
+              User
+              )
+          );
+            
+          Flag = true;
+        
+       }
+   
+       else if(typeof Result == "number")
+       {
+          
+             addAnswer(
+                 Main,
+                 `${Text} equals ${Result}`
+             );
+             
+             Flag = true;
+        
+       }
+       
+       }
+        
+    });
+    
+    if(!Flag)
+    {
+        addAnswer(Main,Notfound);
+    }
+    
+    
+};
+
+const addQuestion = (Main,text) =>
+{
+    Main.innerHTML += `
+        <div class="row">
+            <div class="chat question">${text}</div>
+        </div>
+    `;
+}
+
+const addAnswer = (Main,text) =>
+{
+    Main.innerHTML += `
+    <div class="row">
+        <div class="chat answer">${text}</div>
+    </div>
+    `;
+}
+
+
+D.addEventListener("DOMContentLoaded",()=>{
+    
+    const Main = element("main");
+    
+    const Askbtn = element("button");
+    
+    const Question = element("input");
+    
+    const Lastdiv = element("#last");
+    
+    let User = prompt("Enter your name :");
+    
+    while(User === null  || User === '')
+    {
+    
+        User = prompt("Your name is required for the assistant to work properly : ");
+        
+    }
+    
+    Question.focus();
+    
+    const Ask = () =>{
+        
+        const Text = Question.value;
+        
+        if(Text.length)
+        {
+        
+            addQuestion(Main, Text);
+        
+            Question.value = "";
+            
+            Answer(Main,User,Text);
+             
+            Lastdiv.scrollIntoView();
+        
+        }
+    };
+    
+    
+    Askbtn.addEventListener("click",Ask);
+    
+    Question.addEventListener("keyup",function(event){
+        if(event.keyCode === 13)  Ask();
+    });
+    
+    addAnswer(Main,`Hello ${User}..`);
+    
+    Message();
+});
+
+        </script>
+    </head>
+    <body>
+        <header>
+            <h1 class="nice-font" >Wasap Joki Tugas</h1>
+        </header>
+        
+        <main class="nice-font">
+           
+        </main>
+        
+        <div id="last"></div>
+        
+        <footer>
+            <div id="command">
+                <input placeholder="Ask me something ..." type="text" />
+                <button class="nice-font">Kirim</button>
+            </div>
+        </footer>
+    
+    </body>
+</html>
